@@ -24,7 +24,7 @@ insert into Student values ('14567890','Julius','Caeser','ee_jcx','23589876',1.9
 insert into Student values ('99987654','Lazy','Lazy','lz_llx','23581357',1.67);
 INSERT INTO Student VALUES ('20413306','Weiyang','Liu','wliuax','12345678',3.70);
 
-SELECT * FROM Student
+SELECT * FROM Student;
 
 /* Write the data to disk */
 commit;
