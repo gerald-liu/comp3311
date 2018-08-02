@@ -22,7 +22,7 @@ public class FanClubDB
         // TODO 01: Construct the SQL statement to retrieve the id *
         //          of an employee given the employee's user name. *
         //**********************************************************
-        sql = "";
+        sql = "select employeeId from Employee where userName='" + userName + "'";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -32,7 +32,7 @@ public class FanClubDB
         // TODO 02: Construct the SQL statement to retrieve the id and *
         //          name of ALL employees ordered by employee name.    *
         //**************************************************************
-        sql = "";
+        sql = "select employeeId, employeeName from Employee order by employeeName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -49,7 +49,7 @@ public class FanClubDB
         // TODO 03: Construct the SQL statement to retrieve ALL the attributes *
         //          of a registered user identified by a user name.            *
         //**********************************************************************
-        sql = "";
+        sql = "select * from RegisteredUser where userName='" + userName + "'";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -59,7 +59,10 @@ public class FanClubDB
         //*************************************************************************************
         // TODO 04: Construct the SQL statement to update ALL the registered user attributes. *
         //*************************************************************************************
-        sql = "";
+        sql = "update RegisteredUser" +
+              " set firstName='" + firstName + "', lastName='" + lastName + "', gender='" + gender +
+              "', phoneNo='" + phoneNo + "', userEmail='" + email +
+              "' where userName='" + userName + "'";
         return UpdateData(sql);
     }
 
@@ -72,7 +75,7 @@ public class FanClubDB
         // TODO 05: Construct the SQL statement to retrieve ALL the        *
         //          attributes of a club member identified by a user name. *
         //******************************************************************
-        sql = "";
+        sql = "select * from ClubMember where userName='" + userName + "'";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -81,7 +84,7 @@ public class FanClubDB
         //************************************************************************************
         // TODO 06: Construct the SQL statement to insert the information for a club member. *
         //************************************************************************************
-        sql = "";
+        sql = "insert into ClubMember values ('" + userName + "', '" + birthdate + "', '" + occupation + "', '" + educationLevel + "')";
         return UpdateData(sql);
     }
 
@@ -90,8 +93,10 @@ public class FanClubDB
         //********************************************************************
         // TODO 07: Construct the SQL statement to update ALL the attributes *
         //          of a club member identified by a user name.              *
-        //********************************************************************
-        sql = "";
+        //************************************W********************************
+        sql = "update ClubMember" +
+              " set birthDate = '"+birthdate+"', occupation = '"+occupation+"', educationLevel = '"+educationLevel+
+              "'where userName = '"+userName+"'";
         return UpdateData(sql);
     }
 
@@ -110,7 +115,7 @@ public class FanClubDB
         // and whose event date is greater than or equal to today. Order the result by event name.          *
         //***************************************************************************************************
         sql = "select eventName, eventDate, eventTime, venue, memberFee, nonmemberfee, eventQuota, isMemberOnly " + 
-            "from Event where isAvailable='Y' and eventDate>=sysdate order by eventName";
+            " from Event where isAvailable='Y' and eventDate>=sysdate order by eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -120,7 +125,7 @@ public class FanClubDB
         // TODO 08: Construct the SQL statement to retrieve ALL the    *
         //          attributes for an event identified by an event id. *
         //**************************************************************
-        sql = "";
+        sql = "select * from Event where eventId="+eventId;
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -130,7 +135,9 @@ public class FanClubDB
         // TODO 09: Construct the SQL statement to retrieve the id and name of a fan club's events given *
         //          the club id of the fan club holding the event. Order the result by event name.       *
         //************************************************************************************************
-        sql = "";
+        sql = "select Event.eventId, eventName from Event, HoldsEvent"+
+              " where Event.eventId = HoldsEvent.eventId and HoldsEvent.clubId = "+clubId+
+              " order by Event.eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -140,7 +147,9 @@ public class FanClubDB
         // TODO 10: Construct the SQL statement to retrieve the id and name of ALL the events that a        *
         //          registered user, identified by a user name, has joined. Order the result by event name. *
         //***************************************************************************************************
-        sql = "";
+        sql = "select Event.eventId, eventName from Event, JoinsEvent"+
+              " where Event.eventId = JoinsEvent.eventId and userName = '"+userName+
+              "'order by Event.eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -152,7 +161,10 @@ public class FanClubDB
         //          identified by a user name, HAS JOINED. Order the result by event name. A  *
         //          current event is one whose date is greater than or equal to today's date. *
         //*************************************************************************************
-        sql = "";
+        sql = "select Event.eventId, eventName, eventDate, eventTime, venue, memberFee, nonmemberfee"+
+              " from Event, JoinsEvent"+
+              " where eventDate>= sysdate and Event.eventId = JoinsEvent.eventId and userName = '"+userName+
+              "'order by eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -164,7 +176,10 @@ public class FanClubDB
         //          identified by a user name, HAS JOINED. Order the result by event name. A * 
         //          past event is one whose date is less than today's date.                  *
         //************************************************************************************
-        sql = "";
+        sql = "select Event.eventId, eventName, eventDate, eventTime, venue, memberFee, nonmemberfee" +
+              " from Event, JoinsEvent" +
+              " where eventDate< sysdate and Event.eventId = JoinsEvent.eventId and userName = '" + userName +
+              "'order by eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -178,7 +193,17 @@ public class FanClubDB
         //          (e.g., if the event is member only and the registered user is not a member of the fan *
         //          club holding the event, then the event should not be in the query result).            *
         //*************************************************************************************************
-        sql = "";
+        sql = "select Event.eventId, eventName, eventDate, eventTime, venue,"+
+                    "memberFee, nonmemberfee, eventQuota - count(*) as remainingQuota"+
+                " from Event left outer join JoinsEvent on Event.eventId = JoinsEvent.eventId"+
+                " where isAvailable = 'Y' and "+
+                    "Event.eventId not in (select eventId from JoinsEvent where userName = '"+userName+"') and "+
+                    "not(isMemberOnly = 'Y' and "+
+                        "Event.eventId not in (select eventId from HoldsEvent, HasMember"+
+                            " where HoldsEvent.clubId = HasMember.clubId and HasMember.userName = '"+userName+"'))"+
+                " group by Event.eventId, eventName, eventDate, eventTime, venue,"+
+                    "memberFee, nonmemberfee, eventQuota"+
+                " order by eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -189,7 +214,8 @@ public class FanClubDB
         //          fee and attended information, IN THIS ORDER, for everyone who joined  *
         //          an event identified by its event id. Order the result by user name.   *
         //*********************************************************************************
-        sql = "";
+        sql = "select eventId, userName, paidFee, attended from JoinsEvent"+
+                " where JoinsEvent.eventId = "+eventId+" order by userName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -201,7 +227,10 @@ public class FanClubDB
         //          that holds the event. Order the result by event name. An event is     *
         //          modifiable if the event date is greater or equal to the current date. *
         //*********************************************************************************
-        sql = "";
+        sql = "select Event.eventId, eventName from Event, HoldsEvent"+
+                " where isAvailable = 'Y' and eventDate>= sysdate and "+
+                    "Event.eventId = HoldsEvent.eventId and HoldsEvent.clubId ="+clubId+
+                " order by eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -211,7 +240,7 @@ public class FanClubDB
         // TODO 16: Construct the SQL statement to insert a registered user for an *
         //          event (i.e., to allow a registered user to join an event).     *               
         //**************************************************************************
-        sql = "";
+        sql = "insert into JoinsEvent values ("+eventId+", '"+userName+"', '"+paidFee+"', '"+attended+"')";
         return UpdateData(sql);
     }
 
@@ -221,7 +250,8 @@ public class FanClubDB
         //**************************************************************
         // TODO 17: Construct the SQL statement to insert a new event. *
         //**************************************************************
-        sql = "";
+        sql = "insert into Event values ("+eventId+",'"+eventName+"','"+eventDate+"','"+eventTime+
+                "','"+venue+"',"+memberFee+","+nonmemberFee+","+eventQuota+",'"+isAvailable+"','"+isMemberOnly+"',"+employeeId+")";
         OracleTransaction trans = myOracleDBAccess.BeginTransaction();
         if (trans == null) { return false; }
         if (myOracleDBAccess.SetData(sql, trans))
@@ -234,7 +264,7 @@ public class FanClubDB
                 //          holding the event are contained in the DataTable clubIds. Each club id can be   *
                 //          accessed within the foreach loop as follows: row["CLUBID"].ToString().Trim().   *
                 //*******************************************************************************************
-                sql = "";
+                sql = "insert into HoldsEvent values ("+ row["CLUBID"].ToString().Trim() +", "+eventId+")";
                 if (!myOracleDBAccess.SetData(sql, trans))
                 { myOracleDBAccess.DisposeTransaction(trans); return false; }
             }
@@ -252,7 +282,11 @@ public class FanClubDB
         // TODO 19: Construct the SQL statement to update All the      *
         //          attributes of an event identified by its event id. *
         //**************************************************************
-        sql = "";
+        sql = "update Event"+
+              " set eventName = '"+eventName+"', eventDate = '"+eventDate+"', eventTime = '"+eventTime+
+                "', venue = '"+venue+"', memberFee = "+memberFee+", nonmemberFee = "+nonmemberFee+
+                ", eventQuota = "+eventQuota+", isAvailable = '"+isAvailable+"', isMemberOnly = '"+isMemberOnly+"', employeeId = "+employeeId+
+              " where eventId = "+eventId;
         return UpdateData(sql);
     }
 
@@ -262,7 +296,8 @@ public class FanClubDB
         // TODO 20: Construct the SQL statement to update the paid fee and attended    *
         //          values of everyone who joined an event identified by its event id. *
         //******************************************************************************
-        sql = "";
+        sql = "update JoinsEvent set paidFee='"+paidFee+"', attended='"+attended+
+              "' where eventId="+eventId+" and userName='"+userName+"'";
         return UpdateData(sql);
     }
 
@@ -271,7 +306,7 @@ public class FanClubDB
         //*********************************************************************
         // TODO 21: Construct the SQL statement to make an event unavailable. *
         //*********************************************************************
-        sql = "";
+        sql = "update Event set isAvailable='N' where eventId="+eventId;
         return UpdateData(sql);
     }
 
@@ -299,7 +334,9 @@ public class FanClubDB
         //          description of all the fan clubs a club member, identified *
         //          by a user name, HAS JOINED. Order the result by club name. *
         //**********************************************************************
-        sql = "";
+        sql = "select FanClub.clubId, clubName, description from FanClub, HasMember"+
+                " where FanClub.clubId = HasMember.clubId and HasMember.userName = '"+userName+
+                "' order by clubName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -310,7 +347,10 @@ public class FanClubDB
         //          and date established of the fan clubs a club member, identified   *
         //          by a user name, HAS NOT JOINED. Order the result by club name.    *
         //*****************************************************************************
-        sql = "";
+        sql = "select distinct FanClub.clubId, clubName, description from FanClub, HasMember"+
+                " where FanClub.clubId = HasMember.clubId and "+
+                    "HasMember.clubId not in (select clubId from HasMember where userName = '"+userName+"')"+
+                " order by clubName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -319,7 +359,7 @@ public class FanClubDB
         //***************************************************************************
         // TODO 24: Construct the SQL statement to add a new member for a fan club. *
         //***************************************************************************
-        sql = "";
+        sql = "insert into HasMember values ("+clubId+",'"+userName+"','"+joinDate+"','"+howInformed+"')";
         return UpdateData(sql);
     }
 
@@ -328,7 +368,7 @@ public class FanClubDB
         //*************************************************************
         // TODO 25: Construct the SQL statement to create a fan club. *
         //*************************************************************
-        sql = "";
+        sql = "insert into FanClub values ("+clubId+",'"+clubName+"','"+description+"','"+dateEstablished+"')";
         return UpdateData(sql);
     }
 
@@ -338,7 +378,9 @@ public class FanClubDB
         // TODO 26: Construct the SQL statement to update ALL the       *
         //          attributes of a fan club identified by its club id. *
         //***************************************************************
-        sql = "";
+        sql = "update FanClub"+
+                " set clubName = '"+clubName+"', description = '"+description+"', dateEstablished = '"+dateEstablished+
+                "' where clubId ="+clubId;
         return UpdateData(sql);
     }
 
@@ -357,7 +399,10 @@ public class FanClubDB
         //          assigned to an employee, identified by his/her employee id, OR that have not yet been     *
         //          assigned to any employee (i.e., the employee id is null). Order the result by event name. *
         //*****************************************************************************************************
-        sql = "";
+        sql = "select distinct Remark.eventId, eventName from Remark, Event"+
+                " where Remark.eventId = Event.eventId and(Remark.status <> 'done' or Remark.status is null) and "+
+                       "(Remark.employeeId is null or Remark.employeeId = "+employeeId+")"+
+                " order by eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -369,7 +414,10 @@ public class FanClubDB
         //          been assigned to an employee, identified by an employee id, OR that have not yet been    * 
         //          assigned to any employee (i.e., the employee id is null). Order the result by subject.   *
         //****************************************************************************************************
-        sql = "";
+        sql = "select * from Remark"+
+                " where Remark.eventId = "+eventId+" and(Remark.status <> 'done' or Remark.status is null) and "+
+                        "(Remark.employeeId is null or Remark.employeeId = "+employeeId+")"+
+                " order by subject";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -380,7 +428,9 @@ public class FanClubDB
         //          ONLY those events for which a club member, identified by a user   *
         //          name, has submitted a remark. Order the result by event name.     *
         //*****************************************************************************
-        sql = "";
+        sql = "select distinct Remark.eventId, eventName from Remark, Event"+
+                " where userName = '"+userName+"' and Remark.eventId = Event.eventId"+
+                " order by eventName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -391,7 +441,9 @@ public class FanClubDB
         //          remarks that a club member, identified by a user name, has submitted   *
         //          for an event, identified by its event id. Order the result by subject. *
         //**********************************************************************************
-        sql = "";
+        sql = "select * from Remark"+
+                " where userName = '"+userName+"' and eventId ="+eventId+
+                " order by subject";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -403,7 +455,10 @@ public class FanClubDB
         //          been assigned to an employee, identified by an employee id, OR that have not yet been     *
         //          assigned to any employee (i.e., the employee id is null). Order the result by club name.  *
         //*****************************************************************************************************
-        sql = "";
+        sql = "select distinct Remark.clubId, clubName from Remark, FanClub"+
+                " where Remark.clubId = FanClub.clubId and(Remark.status <> 'done' or Remark.status is null) and "+
+                       "(Remark.employeeId is null or Remark.employeeId = "+employeeId+")"+
+                " order by clubName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -415,7 +470,10 @@ public class FanClubDB
         //          already been assigned to an employee, identified by an employee id, OR that have not yet    * 
         //          been assigned to any employee (i.e., the employee id is null). Order the result by subject. *
         //*******************************************************************************************************
-        sql = "";
+        sql = "select * from Remark"+
+                " where Remark.clubId = "+clubId+" and(Remark.status <> 'done' or Remark.status is null) and "+
+                       "(Remark.employeeId is null or Remark.employeeId = " + employeeId + ")" +
+                " order by subject";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -426,7 +484,9 @@ public class FanClubDB
         //          for ONLY those fan clubs for which a club member, identified by a *
         //          user name, has submitted a remark. Order the result by club name. *
         //*****************************************************************************
-        sql = "";
+        sql = "select distinct Remark.clubId, clubName from Remark, FanClub"+
+                " where userName = '"+userName+"' and Remark.clubId = FanClub.clubId"+
+                " order by clubName";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -437,7 +497,9 @@ public class FanClubDB
         //          remarks that a club member, identified by a user name, has submitted for *
         //          a fan club, identified by its club id. Order the result by subject.      *
         //************************************************************************************
-        sql = "";
+        sql = "select * from Remark"+
+                " where userName = '"+userName+"' and clubId = "+clubId+
+                " order by subject";
         return myOracleDBAccess.GetData(sql);
     }
 
@@ -447,7 +509,8 @@ public class FanClubDB
         //***************************************************************
         // TODO 35: Construct the SQL statement to insert a new remark. *
         //***************************************************************
-        sql = "";
+        sql = "insert into Remark values ("+remarkId+",'"+subject+"','"+text+"','"+submissionDate+"','"+status+
+            "','"+actionTaken+"','"+remarkType+"','"+userName+"',"+employeeId+","+clubId+","+eventId+")";
         return UpdateData(sql);
     }
 
@@ -457,7 +520,8 @@ public class FanClubDB
         // TODO 36: Construct the SQL statement to update the status, action taken *
         //          and employee id of a remark identified by its remark id.       *
         //**************************************************************************
-        sql = "";
+        sql = "update Remark set status='"+status+"', actionTaken='"+actionTaken+
+            "', employeeId="+employeeId+" where remarkId="+remarkId;
         return UpdateData(sql);
     }
 
