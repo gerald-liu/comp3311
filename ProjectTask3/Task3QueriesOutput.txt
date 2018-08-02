@@ -1,0 +1,375 @@
+
+EMPLOYEEID
+----------
+         1
+
+
+EMPLOYEEID EMPLOYEENAME                  
+---------- ------------------------------
+         2 Eric Chen                     
+         3 Judy Wang                     
+         1 Michelle Cafa                 
+
+
+USERNAME   FIRSTNAME       LASTNAME             G PHONENO  USEREMAIL                     
+---------- --------------- -------------------- - -------- ------------------------------
+lesterlo   Lester          Lo                   M 93456789 llo@nomail.com                
+
+
+1 row updated.
+
+
+USERNAME   FIRSTNAME       LASTNAME             G PHONENO  USEREMAIL                     
+---------- --------------- -------------------- - -------- ------------------------------
+lesterlo   fn              ln                   F 12345678 test@test.com                 
+
+
+1 row updated.
+
+
+USERNAME   BIRTHDATE OCCUPATION                EDUCATIONLEVE
+---------- --------- ------------------------- -------------
+lesterlo   20-MAR-87 teacher                   tertiary     
+
+
+1 row inserted.
+
+
+USERNAME   BIRTHDATE OCCUPATION                EDUCATIONLEVE
+---------- --------- ------------------------- -------------
+terrytam   01-APR-70 student                   primary      
+
+
+1 row deleted.
+
+
+1 row updated.
+
+
+USERNAME   BIRTHDATE OCCUPATION                EDUCATIONLEVE
+---------- --------- ------------------------- -------------
+lesterlo   01-APR-70 student                   primary      
+
+
+1 row updated.
+
+
+EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE EVENTQUOTA I
+-------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------ ---------- -
+Beyonce Pre-concert Autograph Session              22-SEP-18 1800 Asia World Expo Room 12                                     0            0         15 Y
+Drake Pre-concert Party                            17-NOV-18 1700 SkyCity Marriott Hotel - Meeting Room B                   150            0         10 Y
+Harry Potter Movie Night                           20-AUG-18 1930 The Grand SC Starsuite                                    250          280         10 N
+Harry Potter: A History of Magic                   20-OCT-18 1400 Hong Kong History Museum                                   50           60         12 N
+Hong Kong Wants Taylor Swift! Fan Project          16-AUG-18 1400 HKCEC Exhibit Room B                                        0            0         25 N
+Jay-Z Photo and Autograph Session                  30-NOV-18 1300 Grand Hyatt Meeting Room C                                  0            0         20 Y
+OTR II Pre-concert Party                           01-DEC-18 1730 SkyCity Marriott Hotel - Meeting Room A                    50           75         25 N
+STARFLEET Annual Dress-up Night                    01-SEP-18 2000 HKUST - Tsang Shiu Tim Art Hall                            50          100         30 N
+Star Trek Movie Marathon                           25-AUG-18 1300 The Grand SC Starsuite                                    225          250         15 N
+Superman and MCU Movie Night                       01-SEP-18 1900 The Grand SC Starsuite                                    240            0         10 Y
+Swifters New Year's Eve Party                      31-DEC-18 1900 Grand Hyatt Hotel ballroom                               1000         1500         60 N
+
+11 rows selected. 
+
+
+   EVENTID EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE EVENTQUOTA I I EMPLOYEEID
+---------- -------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------ ---------- - - ----------
+         1 Beyonce Photo Session                              21-DEC-17 1930 Grand Hyatt Ballroom                                       25           50         15 N N          2
+
+
+   EVENTID EVENTNAME                                         
+---------- --------------------------------------------------
+         1 Beyonce Photo Session                             
+         2 Beyonce Pre-concert Autograph Session             
+        18 OTR II Pre-concert Party                          
+
+
+   EVENTID EVENTNAME                                         
+---------- --------------------------------------------------
+         1 Beyonce Photo Session                             
+         2 Beyonce Pre-concert Autograph Session             
+         6 BigBang Autograph Session                         
+        13 Drake Pre-concert Party                           
+         3 Harry Potter Movie Night                          
+         5 Harry Potter: A History of Magic                  
+        11 Hong Kong Wants Taylor Swift! Fan Project         
+        15 Jay-Z Fan Club Party Night                        
+        16 MCU Movie Night                                   
+        18 OTR II Pre-concert Party                          
+         9 STARFLEET Annual Dress-up Night                   
+
+   EVENTID EVENTNAME                                         
+---------- --------------------------------------------------
+         7 STARFLEET Fan Club Annual Meeting                 
+        17 STARFLEET and MCU Movie Night                     
+        10 Superman Movie Night                              
+        12 Swifters New Year's Eve Party                     
+
+15 rows selected. 
+
+
+   EVENTID EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE
+---------- -------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------
+         2 Beyonce Pre-concert Autograph Session              22-SEP-18 1800 Asia World Expo Room 12                                     0            0
+        13 Drake Pre-concert Party                            17-NOV-18 1700 SkyCity Marriott Hotel - Meeting Room B                   150            0
+         3 Harry Potter Movie Night                           20-AUG-18 1930 The Grand SC Starsuite                                    250          280
+         5 Harry Potter: A History of Magic                   20-OCT-18 1400 Hong Kong History Museum                                   50           60
+        11 Hong Kong Wants Taylor Swift! Fan Project          16-AUG-18 1400 HKCEC Exhibit Room B                                        0            0
+        18 OTR II Pre-concert Party                           01-DEC-18 1730 SkyCity Marriott Hotel - Meeting Room A                    50           75
+         9 STARFLEET Annual Dress-up Night                    01-SEP-18 2000 HKUST - Tsang Shiu Tim Art Hall                            50          100
+        12 Swifters New Year's Eve Party                      31-DEC-18 1900 Grand Hyatt Hotel ballroom                               1000         1500
+
+8 rows selected. 
+
+
+   EVENTID EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE
+---------- -------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------
+         1 Beyonce Photo Session                              21-DEC-17 1930 Grand Hyatt Ballroom                                       25           50
+         6 BigBang Autograph Session                          10-FEB-17 1430 HKCEC Exhibit Room A                                       10            0
+        15 Jay-Z Fan Club Party Night                         16-JUN-18 2030 Conrad Hotel Ballroom                                     100          150
+        16 MCU Movie Night                                    24-MAR-18 1930 The Grand SC Starsuite                                    250          300
+         7 STARFLEET Fan Club Annual Meeting                  27-JAN-18 1900 HKUST - Room 5530                                           0            0
+        17 STARFLEET and MCU Movie Night                      01-JAN-18 1900 The Grand SC Starsuite                                    250          300
+        10 Superman Movie Night                               10-FEB-18 1800 The Grand SC Starsuite                                    260          280
+
+7 rows selected. 
+
+
+   EVENTID EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE REMAININGQUOTA
+---------- -------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------ --------------
+        14 Jay-Z Photo and Autograph Session                  30-NOV-18 1300 Grand Hyatt Meeting Room C                                  0            0             19
+         8 Star Trek Movie Marathon                           25-AUG-18 1300 The Grand SC Starsuite                                    225          250             13
+        19 Superman and MCU Movie Night                       01-SEP-18 1900 The Grand SC Starsuite                                    240            0              3
+
+
+   EVENTID USERNAME   P A
+---------- ---------- - -
+         1 brianmak   Y Y
+         1 cindychan  Y Y
+         1 daisyyeung Y Y
+         1 fredfan    Y Y
+         1 ireneip    Y Y
+         1 jennyjones Y Y
+         1 lesterlo   Y Y
+         1 peterpoon  Y Y
+         1 sharonsu   Y Y
+         1 susansze   Y Y
+         1 timothytu  Y Y
+
+   EVENTID USERNAME   P A
+---------- ---------- - -
+         1 tracytse   Y Y
+         1 victoriayu Y Y
+         1 wendywong  Y N
+         1 yvonneyu   Y Y
+
+15 rows selected. 
+
+
+   EVENTID EVENTNAME                                         
+---------- --------------------------------------------------
+         3 Harry Potter Movie Night                          
+         5 Harry Potter: A History of Magic                  
+
+
+1 row inserted.
+
+
+   EVENTID USERNAME   P A
+---------- ---------- - -
+         3 fredfan    Y N
+
+
+1 row deleted.
+
+
+1 row inserted.
+
+
+   EVENTID EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE EVENTQUOTA I I EMPLOYEEID
+---------- -------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------ ---------- - - ----------
+        20 Test Event                                         02-SEP-18 1100 Test Venue                                                 10           20         30 Y N          1
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row updated.
+
+
+   EVENTID EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE EVENTQUOTA I I EMPLOYEEID
+---------- -------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------ ---------- - - ----------
+        20 Test Event 2                                       03-OCT-19 2359 Test Venue 2                                              299            0         10 Y Y          2
+
+
+1 row updated.
+
+
+   EVENTID USERNAME   P A
+---------- ---------- - -
+        16 carolchen  Y Y
+        16 fredfan    Y Y
+        16 lesterlo   N N
+
+
+1 row updated.
+
+
+   EVENTID USERNAME   P A
+---------- ---------- - -
+        16 carolchen  Y Y
+        16 fredfan    Y Y
+        16 lesterlo   Y Y
+
+
+1 row updated.
+
+
+   EVENTID EVENTNAME                                          EVENTDATE EVEN VENUE                                               MEMBERFEE NONMEMBERFEE EVENTQUOTA I I EMPLOYEEID
+---------- -------------------------------------------------- --------- ---- -------------------------------------------------- ---------- ------------ ---------- - - ----------
+        20 Test Event 2                                       03-OCT-19 2359 Test Venue 2                                              299            0         10 N Y          2
+
+
+1 row deleted.
+
+
+    CLUBID CLUBNAME                                           DESCRIPTION                                                                                                                                            DATEESTAB
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ ---------
+         3 BigBang Fan Club                                   Share and discover content and connect with other fans of the K-pop group BigBang.                                                                     15-MAY-14
+         6 Dan Brown Fan Club                                 Share and discover content and connect with other fans of Dan Brown.                                                                                   05-DEC-85
+         8 Drake Fan Club                                     Sign up to get access to the latest Drake news, music, exclusive photos, videos as well as fantastic products.                                         05-DEC-10
+         9 Jay-Z Fan Club                                     Share, discover content and connect with other fans of Jay-Z. Find Jay-Z videos, photos, wallpapers, forums, polls, news and more.                     12-AUG-98
+        10 MCU Fan Club                                       The best place to connect with other fans and get news about comics' greatest super-heroes: Iron Man, Thor, Captain America, the X-Men, and more.      01-APR-15
+         2 Pottermore                                         Pottermore provides a forum for discussing everything related to the Harry Potter books and movies.                                                    01-NOV-14
+         4 STARFLEET                                          STARFLEET offers members a wealth of resources related to the Star Trek universe.                                                                      05-DEC-85
+         5 Superman Fan Club                                  A club for people who are fans of the Man of Steel, the first and best comic book superhero.                                                           25-JUL-95
+         1 The Beyhive                                        The Beyhive provides Beyonce fans access to news, special experiences, exclusive merchandise and more.                                                 10-OCT-03
+         7 The Swifters                                       Sign up and join us for exclusive access to Taylor Swift photos, videos, news and updates.                                                             13-SEP-07
+
+10 rows selected. 
+
+
+    CLUBID CLUBNAME                                           DESCRIPTION                                                                                                                                           
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------
+         3 BigBang Fan Club                                   Share and discover content and connect with other fans of the K-pop group BigBang.                                                                    
+         6 Dan Brown Fan Club                                 Share and discover content and connect with other fans of Dan Brown.                                                                                  
+         8 Drake Fan Club                                     Sign up to get access to the latest Drake news, music, exclusive photos, videos as well as fantastic products.                                        
+         9 Jay-Z Fan Club                                     Share, discover content and connect with other fans of Jay-Z. Find Jay-Z videos, photos, wallpapers, forums, polls, news and more.                    
+        10 MCU Fan Club                                       The best place to connect with other fans and get news about comics' greatest super-heroes: Iron Man, Thor, Captain America, the X-Men, and more.     
+         4 STARFLEET                                          STARFLEET offers members a wealth of resources related to the Star Trek universe.                                                                     
+         1 The Beyhive                                        The Beyhive provides Beyonce fans access to news, special experiences, exclusive merchandise and more.                                                
+         7 The Swifters                                       Sign up and join us for exclusive access to Taylor Swift photos, videos, news and updates.                                                            
+
+8 rows selected. 
+
+
+    CLUBID CLUBNAME                                           DESCRIPTION                                                                                                                                           
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------
+         2 Pottermore                                         Pottermore provides a forum for discussing everything related to the Harry Potter books and movies.                                                   
+         5 Superman Fan Club                                  A club for people who are fans of the Man of Steel, the first and best comic book superhero.                                                          
+
+
+1 row inserted.
+
+
+    CLUBID USERNAME   JOINDATE  HOWINFORMED    
+---------- ---------- --------- ---------------
+         2 wendywong  17-AUG-15 social media   
+         3 wendywong  10-DEC-14 web ad         
+         8 wendywong  03-DEC-15 web ad         
+         1 wendywong  02-AUG-18 web ad         
+
+
+1 row deleted.
+
+
+1 row inserted.
+
+
+    CLUBID CLUBNAME                                           DESCRIPTION                                                                                                                                            DATEESTAB
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ ---------
+        11 Test Club                                          Test Description                                                                                                                                       01-AUG-18
+
+
+1 row updated.
+
+
+    CLUBID CLUBNAME                                           DESCRIPTION                                                                                                                                            DATEESTAB
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ ---------
+        11 Test Club 2                                        Test Description 2                                                                                                                                     31-JUL-18
+
+
+1 row deleted.
+
+
+   EVENTID EVENTNAME                                         
+---------- --------------------------------------------------
+         1 Beyonce Photo Session                             
+         4 J.K. Rowling Harry Potter Reading                 
+         7 STARFLEET Fan Club Annual Meeting                 
+
+
+  REMARKID SUBJECT                                            TEXT                                                                                                                                                   SUBMISSIO STATUS     ACTIONTAKEN                                        REMAR USERNAME   EMPLOYEEID     CLUBID    EVENTID
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ --------- ---------- -------------------------------------------------- ----- ---------- ---------- ---------- ----------
+         5 Chaotic meeting!                                   The meeting was not well organized.                                                                                                                    02-FEB-18                                                               event susansze                                  7
+         1 Venue too small                                    The venue for the meeting was not large enough to accommodate all those attending.                                                                     10-FEB-18 read                                                          event peterpoon           2                     7
+
+
+   EVENTID EVENTNAME                                         
+---------- --------------------------------------------------
+         7 STARFLEET Fan Club Annual Meeting                 
+        10 Superman Movie Night                              
+
+
+  REMARKID SUBJECT                                            TEXT                                                                                                                                                   SUBMISSIO STATUS     ACTIONTAKEN                                        REMAR USERNAME   EMPLOYEEID     CLUBID    EVENTID
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ --------- ---------- -------------------------------------------------- ----- ---------- ---------- ---------- ----------
+         5 Chaotic meeting!                                   The meeting was not well organized.                                                                                                                    02-FEB-18                                                               event susansze                                  7
+
+
+    CLUBID CLUBNAME                                          
+---------- --------------------------------------------------
+         6 Dan Brown Fan Club                                
+        10 MCU Fan Club                                      
+
+
+  REMARKID SUBJECT                                            TEXT                                                                                                                                                   SUBMISSIO STATUS     ACTIONTAKEN                                        REMAR USERNAME   EMPLOYEEID     CLUBID    EVENTID
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ --------- ---------- -------------------------------------------------- ----- ---------- ---------- ---------- ----------
+        10 Events needed!                                     This fan club needs to have some events or I will leave it!                                                                                            10-JUL-18                                                               club  susansze                       6           
+         7 No club events!                                    Can this club please have some events?                                                                                                                 10-APR-18 processing Organizing events.                                 club  lesterlo            3          6           
+         9 No events?                                         Why are we not having any events?                                                                                                                      20-JUL-18                                                               club  peterpoon                      6           
+
+
+    CLUBID CLUBNAME                                          
+---------- --------------------------------------------------
+         6 Dan Brown Fan Club                                
+         5 Superman Fan Club                                 
+
+
+  REMARKID SUBJECT                                            TEXT                                                                                                                                                   SUBMISSIO STATUS     ACTIONTAKEN                                        REMAR USERNAME   EMPLOYEEID     CLUBID    EVENTID
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ --------- ---------- -------------------------------------------------- ----- ---------- ---------- ---------- ----------
+        10 Events needed!                                     This fan club needs to have some events or I will leave it!                                                                                            10-JUL-18                                                               club  susansze                       6           
+
+
+1 row inserted.
+
+
+  REMARKID SUBJECT                                            TEXT                                                                                                                                                   SUBMISSIO STATUS     ACTIONTAKEN                                        REMAR USERNAME   EMPLOYEEID     CLUBID    EVENTID
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ --------- ---------- -------------------------------------------------- ----- ---------- ---------- ---------- ----------
+        11 Test Subject                                       Test Text                                                                                                                                              11-MAR-18 read                                                          event peterpoon           1                     7
+
+
+1 row updated.
+
+
+  REMARKID SUBJECT                                            TEXT                                                                                                                                                   SUBMISSIO STATUS     ACTIONTAKEN                                        REMAR USERNAME   EMPLOYEEID     CLUBID    EVENTID
+---------- -------------------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------ --------- ---------- -------------------------------------------------- ----- ---------- ---------- ---------- ----------
+        11 Test Subject                                       Test Text                                                                                                                                              11-MAR-18 processing Test Action                                        event peterpoon           2                     7
+
+
+1 row deleted.
+

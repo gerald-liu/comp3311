@@ -10,27 +10,25 @@ select * from RegisteredUser where userName='lesterlo';
 /* 4. UpdateRegisteredUser(*) */
 update RegisteredUser
 set firstName='fn', lastName='ln',
-gender='F', phoneNo='12345678', email='test@test.com'
+gender='F', phoneNo='12345678', userEmail='test@test.com'
 where userName='lesterlo';
 
 select * from RegisteredUser where userName='lesterlo';
 
 update RegisteredUser
 set firstName='Lester', lastName='Lo', gender='M',
-    phoneNo='93456789', email='llo@nomail.com'
+    phoneNo='93456789', userEmail='llo@nomail.com'
 where userName='lesterlo';
-
-select * from RegisteredUser where userName='lesterlo';
 
 /* 5. GetClubMember(string userName): return all attributes */
 select * from ClubMember where userName='lesterlo';
 
 /* 6. InsertClubMember(*) */
-insert into ClubMember values ('usr','01-APR-70','student','primary');
+insert into ClubMember values ('terrytam','01-APR-70','student','primary');
 
-select * from ClubMember where userName='usr';
+select * from ClubMember where userName='terrytam';
 
-delete from ClubMember where userName='usr';
+delete from ClubMember where userName='terrytam';
 
 /* 7. UpdateClubMember(*) */
 update ClubMember
@@ -42,8 +40,6 @@ select * from ClubMember where userName='lesterlo';
 update ClubMember
 set birthDate='20-MAR-87', occupation='teacher', educationLevel='tertiary'
 where userName='lesterlo';
-
-select * from ClubMember where userName='lesterlo';
 
 /* Given: GetCurrentEvents() */
 select eventName, eventDate, eventTime, venue, memberFee, nonmemberfee, eventQuota, isMemberOnly
@@ -66,16 +62,14 @@ order by Event.eventName;
 return id, name, date, time, venue, member fee and nonmember fee; order by name */
 select Event.eventId, eventName, eventDate, eventTime, venue, memberFee, nonmemberfee
 from Event, JoinsEvent
-where isAvailable='Y' and eventDate>=sysdate and
-    Event.eventId=JoinsEvent.eventId and userName='lesterlo'
+where eventDate>=sysdate and Event.eventId=JoinsEvent.eventId and userName='lesterlo'
 order by eventName;
 
 /* 12. GetPastEventsJoined(string userName):
 return id, name, date, time, venue, member fee and nonmember fee; order by name */
 select Event.eventId, eventName, eventDate, eventTime, venue, memberFee, nonmemberfee
 from Event, JoinsEvent
-where isAvailable='Y' and eventDate<sysdate and
-    Event.eventId=JoinsEvent.eventId and userName='lesterlo'
+where eventDate<sysdate and Event.eventId=JoinsEvent.eventId and userName='lesterlo'
 order by eventName;
 
 /* 13. GetEventsNotJoined(string userName):
@@ -83,8 +77,8 @@ return id, name, date, time, venue, member fee and nonmember fee
 and REMAINING QUOTA of events not joined and availble to join
 (isAvailable='Y', isMemberOnly?) */
 select Event.eventId, eventName, eventDate, eventTime, venue,
-    memberFee, nonmemberfee, eventQuota-count(*)
-from Event left outer join JoinsEvent
+    memberFee, nonmemberfee, eventQuota-count(*) as remainingQuota
+from Event left outer join JoinsEvent on Event.eventId=JoinsEvent.eventId
 where isAvailable='Y' and
     Event.eventId not in (select eventId from JoinsEvent where userName='lesterlo') and
     not (isMemberOnly='Y' and
@@ -102,12 +96,16 @@ where JoinsEvent.eventId='1' order by userName;
 /* 15. GetModifiableEventsIdAndName(string clubId):
 return eventId, eventName; order by eventName */
 select Event.eventId, eventName from Event, HoldsEvent
-where isAvailable='Y' and eventDate>=sysdate order by eventName and
+where isAvailable='Y' and eventDate>=sysdate and
     Event.eventId=HoldsEvent.eventId and HoldsEvent.clubId='2'
 order by eventName;
 
 /* 16. JoinEvent(...): insert a registered user */
-insert into JoinsEvent values (eventId, userName, paidFee, attended);
+insert into JoinsEvent values (3, 'fredfan', 'Y', 'N');
+
+select * from JoinsEvent where eventId=3 and userName='fredfan';
+
+delete from JoinsEvent where eventId=3 and userName='fredfan';
 
 /* 17. CreateEvent(*) */
 insert into Event values (20,'Test Event','02-SEP-18','1100','Test Venue',10,20,30,'Y','N',1);
@@ -127,8 +125,6 @@ set eventName='Test Event 2', eventDate='03-Oct-19', eventTime='2359', venue='Te
 where eventId='20';
 
 select * from Event where eventId=20;
-
-delete from Event where eventId=20;
 
 /* 20. UpdatePaidFeeAndAttendance() */
 update JoinsEvent set paidFee='N', attended='N' where eventId='16' and userName='lesterlo';
@@ -157,7 +153,7 @@ order by clubName;
 
 /* 23. GetFanClubsNotJoined(string userName):
 return id, name, description; order by name */
-select FanClub.clubId, clubName, description from FanClub, HasMember
+select distinct FanClub.clubId, clubName, description from FanClub, HasMember
 where FanClub.clubId=HasMember.clubId and
     HasMember.clubId not in (select clubId from HasMember where userName='lesterlo')
 order by clubName;
@@ -172,10 +168,14 @@ delete from HasMember where clubId='1' and userName='wendywong';
 /* 25. CreateFanClub(*) */
 insert into FanClub values (11,'Test Club','Test Description','01-AUG-18');
 
+select * from FanClub where clubId='11';
+
 /* 26. UpdateFanClub(*) */
 update FanClub
 set clubName='Test Club 2', description='Test Description 2', dateEstablished = '31-JUL-18'
 where clubId='11';
+
+select * from FanClub where clubId='11';
 
 delete from FanClub where clubId='11';
 
@@ -184,18 +184,18 @@ return id, name of events whose remarks either
 have status not equal to 'done' AND assigned to an employee,
 OR the employee id is null. order by eventName */
 select distinct Remark.eventId, eventName from Remark, Event
-where Remark.eventId=Event.eventId and
-    (Remark.employeeId=null or (Remark.employeeId=2 and Remark.status<>'done'))
+where Remark.eventId=Event.eventId and (Remark.status<>'done' or Remark.status is null) and
+    (Remark.employeeId is null or Remark.employeeId=2)
 order by eventName;
 
 /* 28. GetAvailableEventRemarksForProcessing(string eventId, string employeeId):
 return all attributes for remarks of this event, which
 either have status not equal to 'done' AND assigned to an employee,
-OR the employee id is null. order by eventName */
+OR the employee id is null. order by subject */
 select * from Remark
-where Remark.eventId='7' and
-    (Remark.employeeId=null or (Remark.employeeId=2 and Remark.status<>'done'))
-order by eventName;
+where Remark.eventId='7' and (Remark.status<>'done' or Remark.status is null) and
+    (Remark.employeeId is null or Remark.employeeId=2)
+order by subject;
 
 /* 29. GetEventsWithRemarksFromUserName(string userName):
 return id, name of events for which the club member has submitted a remark. order by name */
@@ -214,18 +214,18 @@ return id, name of clubs whose remarks either
 have status not equal to 'done' AND assigned to an employee,
 OR the employee id is null. order by clubName */
 select distinct Remark.clubId, clubName from Remark, FanClub
-where Remark.clubId=FanClub.clubId and
-    (Remark.employeeId=null or (Remark.employeeId=3 and Remark.status<>'done'))
+where Remark.clubId=FanClub.clubId and (Remark.status<>'done' or Remark.status is null) and
+    (Remark.employeeId is null or Remark.employeeId=3)
 order by clubName;
 
 /* 32. GetAvailableFanClubRemarksForProcessing(string clubId, string employeeId):
 return all attributes for remarks of this club, which
 either have status not equal to 'done' AND assigned to an employee,
-OR the employee id is null. order by clubName */
+OR the employee id is null. order by subject */
 select * from Remark
-where Remark.clubId='6' and
-    (Remark.employeeId=null or (Remark.employeeId=3 and Remark.status<>'done'))
-order by clubName;
+where Remark.clubId='6' and (Remark.status<>'done' or Remark.status is null) and
+    (Remark.employeeId is null or Remark.employeeId=3)
+order by subject;
 
 /* 33. GetFanClubsWithRemarksFromUserName(string userName):
 return id, name of clubs for which the club member has submitted a remark. order by name */
